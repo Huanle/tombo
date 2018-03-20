@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tombo Examples &mdash; Tombo 1.2.1b documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Tombo 1.2.1b documentation" href="index.html"/>
+        <link rel="next" title="Re-squiggle Algorithm" href="resquiggle.html"/>
+        <link rel="prev" title="Welcome to Tombo’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tombo
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2.1b
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tombo Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#re-squiggle-raw-signal-genomic-alignment">Re-squiggle (Raw Signal Genomic Alignment)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modified-base-detection">Modified Base Detection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#specific-alternative-base-method">Specific Alternative Base Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#canonical-sample-comparison-method">Canonical Sample Comparison Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#de-novo-non-canonical-base-method"><em>De novo</em> Non-canonical Base Method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#text-output">Text Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wiggle-format-output">Wiggle Format Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#genome-sequence-output">Genome Sequence Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-examples">Plotting Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="resquiggle.html">Re-squiggle Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modified_base_detection.html">Modified Base Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_output.html">Text Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filtering.html">Read Filtering Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_training.html">Model Training (Advanced Users Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rna.html">RNA Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tombo.html">tombo package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tombo</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tombo Examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tombo-examples">
+<h1>Tombo Examples<a class="headerlink" href="#tombo-examples" title="Permalink to this headline">¶</a></h1>
+<p>Below are minimal use case examples. For more detail on each commands options and further algorithm details, please see the corresponding documentation sections.</p>
+<div class="section" id="re-squiggle-raw-signal-genomic-alignment">
+<h2>Re-squiggle (Raw Signal Genomic Alignment)<a class="headerlink" href="#re-squiggle-raw-signal-genomic-alignment" title="Permalink to this headline">¶</a></h2>
+<p>The re-squiggle algorithm aligns raw signal (electric current nanopore measurements) to genomic sequence based on a genomic mapping.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> command will add infomation (the mapped genomic location and the raw signal to sequence assignment) to the read files provided (in FAST5 format), as well as producing an index file for more efficient file access in downstream commands.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> command must be run before any further processing by Tombo commands.</p>
+</div>
+<p><strong>Note</strong>: Currently, only models for R9.4/5 (1D or 1D^2) DNA or RNA sequencing are included with Tombo. Analysis of other nanopore data types is not supported at this time. If DNA or RNA sample type is not explicitly specified (via <code class="docutils literal notranslate"><span class="pre">--dna</span></code> or <code class="docutils literal notranslate"><span class="pre">--rna</span></code> options) the sample type will be detected automatically for the set of reads.</p>
+<p>For more details see the <a class="reference internal" href="resquiggle.html"><span class="doc">re-squiggle documentation</span></a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># optionally annotate raw FAST5s with FASTQ files produced from the same reads</span>
+tombo annotate_raw_with_fastqs --fast5-basedir &lt;fast5s-base-directory&gt; --fastq-filenames &lt;reads.fastq&gt;
+
+tombo resquiggle &lt;fast5s-base-directory&gt; &lt;reference-fasta&gt; --processes <span class="m">4</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modified-base-detection">
+<h2>Modified Base Detection<a class="headerlink" href="#modified-base-detection" title="Permalink to this headline">¶</a></h2>
+<p>Tombo provides three methods for the investigation of modified bases. Each method has different advantages and requirements.</p>
+<ol class="arabic simple">
+<li>Specific alternative base detection</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Specify the <code class="docutils literal notranslate"><span class="pre">--alternate-bases</span></code> option to execute this method.</li>
+<li>This method produces a likelihood ratio using the canonical and alternative model specified.</li>
+<li>Alternative DNA models are currently available for 5-methylcytosine (5mA) and N6-methyladenosine (6mA) in all sequence contexts.</li>
+<li>More modifications will continue to be added.</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Canonical (control) sample comparison</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Specify the <code class="docutils literal notranslate"><span class="pre">--control-fast5-basedirs</span></code> option to execute this method.</li>
+<li>This method performs a hypothesis test against the distribution estimated from the control sample at each base.</li>
+<li>This method requires the production of a second set of reads containing only the 4 canonical bases (e.g PCR).</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><em>De novo</em> canonical model comparison<ul>
+<li>No additional options (aside from a set of reads) are needed to execute this method.</li>
+<li>This method compares re-squiggled signal to the default canonical model.</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<div>Both the control sample comparison and the <em>de novo</em> methods may not identify the exact modified base location and gives no information as to the identity of a modified base.</div></blockquote>
+<hr class="docutils" />
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="_images/testing_method_comparison.png"><img alt="_images/testing_method_comparison.png" src="_images/testing_method_comparison.png" style="width: 975.0px; height: 546.0px;" /></a>
+<p class="caption"><span class="caption-text">Tombo modified base testing methods.</span></p>
+</div>
+<hr class="docutils" />
+<p>The result of all <code class="docutils literal notranslate"><span class="pre">test_significance</span></code> calls will be a binary statistics file(s), which can be passed to other Tombo sub-commands.</p>
+<p>For more details see the <a class="reference internal" href="modified_base_detection.html"><span class="doc">modified base detection documentation</span></a>.</p>
+<div class="section" id="specific-alternative-base-method">
+<h3>Specific Alternative Base Method<a class="headerlink" href="#specific-alternative-base-method" title="Permalink to this headline">¶</a></h3>
+<p>In order to specifically detect 5mC and 6mA, use the <code class="docutils literal notranslate"><span class="pre">test_significance</span></code> command with the <code class="docutils literal notranslate"><span class="pre">--alternate-bases</span> <span class="pre">5mC</span> <span class="pre">6mA</span></code> option.</p>
+<p>This will compute a log likelihood ratio using the default canonical model and the 5mC and 6mA alternative DNA models provided with Tombo.</p>
+<p>New alternative base models will be added as they are trained. This is the perferred method for modified base detection if a model is available for your biological modification of interest as it identifies the exact location of the modified base and reduces false positives for spurious shifts in signal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo test_significance --fast5-basedirs &lt;fast5s-base-directory&gt; <span class="se">\</span>
+    --alternate-bases 5mC 6mA --statistics-file-basename sample_alt_model
+</pre></div>
+</div>
+</div>
+<div class="section" id="canonical-sample-comparison-method">
+<h3>Canonical Sample Comparison Method<a class="headerlink" href="#canonical-sample-comparison-method" title="Permalink to this headline">¶</a></h3>
+<p>In order to execute the canonical sample comparison method, use the <code class="docutils literal notranslate"><span class="pre">test_significance</span></code> command providing a second set of reads from the same biological sample containing only canonical bases (e.g. PCR) using the <code class="docutils literal notranslate"><span class="pre">--control-fast5-basedirs</span></code> option.</p>
+<p>This will perform a hypothesis test against the signal level observed from the control sample at each genomic position. In some cases this method provides the highest accuracy, but does not always identify the exact modified base position.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo test_significance --fast5-basedirs &lt;fast5s-base-directory&gt; <span class="se">\</span>
+    --control-fast5-basedirs &lt;control-fast5s-base-directory&gt;  <span class="se">\</span>
+    --statistics-file-basename sample_canonical_compare
+</pre></div>
+</div>
+</div>
+<div class="section" id="de-novo-non-canonical-base-method">
+<h3><em>De novo</em> Non-canonical Base Method<a class="headerlink" href="#de-novo-non-canonical-base-method" title="Permalink to this headline">¶</a></h3>
+<p>In order to perform <em>de novo</em> non-canonical base detection, use the <code class="docutils literal notranslate"><span class="pre">test_significance</span></code> command without any other options (aside from the set of reads to test).</p>
+<p>This will perform a hypothesis test against the default canonical base model provided with Tombo. Note that this method is quite error prone and may result in a high false positive rate, but may be of use in a research and development setting. This method also has the lowest requirement of only a set of reads and a genome.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo test_significance --fast5-basedirs &lt;fast5s-base-directory&gt; <span class="se">\</span>
+    --statistics-file-basename sample_de_novo_detection
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="text-output">
+<h2>Text Output<a class="headerlink" href="#text-output" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="wiggle-format-output">
+<h3>Wiggle Format Output<a class="headerlink" href="#wiggle-format-output" title="Permalink to this headline">¶</a></h3>
+<p>In order to output the results of re-squiggling and statistical testing in a genome browser compatible format (<a class="reference external" href="https://genome.ucsc.edu/goldenpath/help/wiggle.html">wiggle format</a>), the <code class="docutils literal notranslate"><span class="pre">write_wiggles</span></code> sub-command is provided.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo write_wiggles --fast5-basedirs &lt;fast5s-base-directory&gt; --wiggle-basename sample_alt_model <span class="se">\</span>
+    --statistics-filename sample_alt_model.5mC.tombo.stats --wiggle-types dampened_fraction coverage
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p>Other <code class="docutils literal notranslate"><span class="pre">--wiggle-types</span></code> available are <code class="docutils literal notranslate"><span class="pre">fraction</span></code>, <code class="docutils literal notranslate"><span class="pre">signal</span></code>, <code class="docutils literal notranslate"><span class="pre">signal_sd</span></code>, <code class="docutils literal notranslate"><span class="pre">dwell</span></code> and <code class="docutils literal notranslate"><span class="pre">difference</span></code>.</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">dampened_fraction</span></code> option adds psuedo-counts to the detected number of un-modified and modified reads at each tested location (as specified by the <code class="docutils literal notranslate"><span class="pre">--coverage-dampen-counts</span></code> option), while the <code class="docutils literal notranslate"><span class="pre">fraction</span></code> option returns the raw fraction of modified reads at any genomic site. The <code class="docutils literal notranslate"><span class="pre">dampen_fraction</span></code> output is intended to allow the inclusion of low coverage regions in downstream analysis without causing potentially false site at the top of rank lists. Visualize different values of the <code class="docutils literal notranslate"><span class="pre">--coverage-dampen-counts</span></code> option with the included <code class="docutils literal notranslate"><span class="pre">scripts/test_beta_priors.R</span></code> script.</p>
+</div>
+</div>
+<div class="section" id="genome-sequence-output">
+<h3>Genome Sequence Output<a class="headerlink" href="#genome-sequence-output" title="Permalink to this headline">¶</a></h3>
+<p>For modified base analysis pipelines (e.g. motif detection), it may be useful to output the genomic sequence surrounding locations with the largest fraction of modified reads. The <code class="docutils literal notranslate"><span class="pre">write_most_significant_fasta</span></code> sub-command is provided for this purpose.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo write_most_significant_fasta --statistics-filename sample_alt_model.6mA.tombo.stats <span class="se">\</span>
+    --genome-fasta &lt;reference-fasta&gt;
+</pre></div>
+</div>
+<p>Example <a class="reference external" href="http://meme-suite.org/doc/meme.html">meme</a> command line modified base motif detection command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./meme -oc motif_output.meme -dna -mod zoops tombo_results.significant_regions.fasta
+</pre></div>
+</div>
+<p>For more details see the <a class="reference internal" href="text_output.html"><span class="doc">text output documentation</span></a>.</p>
+</div>
+</div>
+<div class="section" id="plotting-examples">
+<h2>Plotting Examples<a class="headerlink" href="#plotting-examples" title="Permalink to this headline">¶</a></h2>
+<p>Tombo provides many plotting functions for the visualization of modified bases and raw nanopore signal in general.</p>
+<p>Most plotting commands are genome-anchored. That is the raw signal is plotted as the re-squiggle algorithm has assigned it to the genome. Thus each read contains a different number of raw observations assigned to each genomic base. For summary distributions (overplotting optios not showing raw signal) the distributions are taken over each read’s average signal level at the genomic position.</p>
+<p>Each genome anchored plotting command allows for the selection of genomic positions based on generally applicable criterion.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo plot_max_coverage --fast5-basedirs &lt;fast5s-base-directory&gt; --plot-standard-model
+
+tombo plot_motif_centered --fast5-basedirs &lt;fast5s-base-directory&gt; --motif AWC <span class="se">\</span>
+    --genome-fasta genome.fasta --control-fast5-basedirs &lt;control-fast5s-base-directory&gt;
+
+tombo plot_per_read --per-read-statistics-filename &lt;per_read_statistics.tombo.stats&gt; <span class="se">\</span>
+    --genome-locations chromosome:1000 chromosome:2000:- <span class="se">\</span>
+    --genome-fasta genome.fasta
+</pre></div>
+</div>
+<p>For more details see the <a class="reference internal" href="plotting.html"><span class="doc">plotting documentation</span></a>.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For additional command details, see the specific commands documentation section.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="resquiggle.html" class="btn btn-neutral float-right" title="Re-squiggle Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Tombo’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Oxford Nanopore Technologies.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.2.1b',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

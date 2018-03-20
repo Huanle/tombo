@@ -1,0 +1,78 @@
+tombo package
+=============
+
+Submodules
+----------
+
+tombo.c\_dynamic\_programming module
+------------------------------------
+
+.. automodule:: tombo.c_dynamic_programming
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.c\_helper module
+----------------------
+
+.. automodule:: tombo.c_helper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.dynamic\_programming module
+---------------------------------
+
+.. automodule:: tombo.dynamic_programming
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.plot\_commands module
+---------------------------
+
+.. automodule:: tombo.plot_commands
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.resquiggle module
+-----------------------
+
+.. automodule:: tombo.resquiggle
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.text\_output\_commands module
+-----------------------------------
+
+.. automodule:: tombo.text_output_commands
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.tombo\_helper module
+--------------------------
+
+.. automodule:: tombo.tombo_helper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tombo.tombo\_stats module
+-------------------------
+
+.. automodule:: tombo.tombo_stats
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: tombo
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Re-squiggle Algorithm &mdash; Tombo 1.2.1b documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Tombo 1.2.1b documentation" href="index.html"/>
+        <link rel="next" title="Modified Base Detection" href="modified_base_detection.html"/>
+        <link rel="prev" title="Tombo Examples" href="examples.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tombo
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.2.1b
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Tombo Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Re-squiggle Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#algorithm-details">Algorithm Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#genome-mapping">Genome Mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#event-detection">Event Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sequence-to-signal-assignment">Sequence to Signal Assignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resolve-skipped-bases">Resolve Skipped Bases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#common-failed-read-descriptions">Common Failed Read Descriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tombo-fast5-format">Tombo FAST5 Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tombo-index-file">Tombo Index File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-command-line-options">Additional Command Line Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-process-raw-reads">Pre-process Raw Reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-standard-data-locations">Non-standard Data Locations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modified_base_detection.html">Modified Base Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_output.html">Text Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filtering.html">Read Filtering Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_training.html">Model Training (Advanced Users Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rna.html">RNA Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tombo.html">tombo package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tombo</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Re-squiggle Algorithm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/resquiggle.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="re-squiggle-algorithm">
+<h1>Re-squiggle Algorithm<a class="headerlink" href="#re-squiggle-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>The signal level data produced from a nanopore read is referred to as a squiggle. Base calling this squiggle information generally contains some errors compared to a refernce genome. The re-squiggle algorithm defines a new squiggle to genomic sequence assignment, hence a re-squiggle.</p>
+<p>The re-squiggle algorithm is the basis for the Tombo framework. The re-squiggle algorithm takes as input a read file (in FAST5 format) containing raw signal and associated base calls. The base calls are mapped to a genome reference and then the raw signal is assigned to the genomic sequence based on an expected current level model.</p>
+<p><strong>TL;DR</strong>:</p>
+<ul class="simple">
+<li>Re-squiggle must be run before any other Tombo command (aside from the <code class="docutils literal notranslate"><span class="pre">annotate_raw_with_fastqs</span></code> pre-processing sub-command).</li>
+<li>Minimally the command takes a directory containing FAST5 files and a genome/transcriptome reference.<ul>
+<li>Genome reference may be previously known or discovered from this sample.</li>
+</ul>
+</li>
+<li>FAST5 files must contain basecalls (as produced by albacore in fast5 mode or added with <code class="docutils literal notranslate"><span class="pre">annotate_raw_with_fastqs</span></code>), but need not contain the “Events” table.</li>
+<li>Tombo currently only supports R9.4 and R9.5 data (via included default models). R9.4.1 and R9.5.1 are supported. Other data may produce sub-optimal results.</li>
+<li>DNA and RNA reads will be detected automatically and processed accordingly (set explicitly with <code class="docutils literal notranslate"><span class="pre">--dna</span></code> or <code class="docutils literal notranslate"><span class="pre">--rna</span></code>).<ul>
+<li>Tombo does not perform spliced mapping. Thus a transcriptime reference must be passed to the re-squiggle command for RNA samples. For futher details on Tombo RNA processing see the <a class="reference internal" href="rna.html"><span class="doc">RNA Processing</span></a> section.</li>
+</ul>
+</li>
+<li>Run <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> over multiple cores with the <code class="docutils literal notranslate"><span class="pre">--processes</span></code> option.<ul>
+<li>The <code class="docutils literal notranslate"><span class="pre">--threads-per-process</span></code> is also provided, but it is generally recommended that this option remains set to the default of 1, though it may improve results on some computing environments.</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="algorithm-details">
+<h2>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h2>
+<p>The re-squiggle algorithm occurs in four main steps described below.</p>
+<ul class="simple">
+<li>Genome Mapping</li>
+<li>Event Detection</li>
+<li>Sequence to Signal Assignment</li>
+<li>Resolve Skipped Bases</li>
+</ul>
+<div class="section" id="genome-mapping">
+<h3>Genome Mapping<a class="headerlink" href="#genome-mapping" title="Permalink to this headline">¶</a></h3>
+<p>The genome mapping is performed via the python API to <code class="docutils literal notranslate"><span class="pre">minimap2</span></code> (<a class="reference external" href="https://pypi.python.org/pypi/mappy">mappy python package</a>).</p>
+<p>Read base called sequence location within the FAST5 file is defined by the <code class="docutils literal notranslate"><span class="pre">--basecall-group</span></code> and <code class="docutils literal notranslate"><span class="pre">--basecall-subgroups</span></code> command line options. The default values of these parameters point to the default location for base calls from albacore or <code class="docutils literal notranslate"><span class="pre">annotate_raw_with_fastqs</span></code>.</p>
+<p>The genomic sequence for successfully mapped reads are then passed on to the sequence to signal assignment stage.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Unless the optional dependency <code class="docutils literal notranslate"><span class="pre">pyfaidx</span></code> is installed (included in default conda installation), each process reads the whole reference genome into memory in order to extract genomic seqeunce. Take care when running Tombo on larger genomes to avoid overflowing a systems memory. This is true even if the optional <code class="docutils literal notranslate"><span class="pre">--minimap2-index</span></code> parameter is provided. The minimap2 index parameter only effects the mapping call itself.</p>
+</div>
+</div>
+<div class="section" id="event-detection">
+<h3>Event Detection<a class="headerlink" href="#event-detection" title="Permalink to this headline">¶</a></h3>
+<p>The Tombo algorithm does not require the “Events” table (raw signal assignment to base calls). Instead, Tombo discovers events from the raw signal. This segmented signal makes downstream processing steps more efficient and stable. This event detection algorithm is different from the event detection performed in previous versions of albacore, but produces similar results.</p>
+<p>Events are determined by identifying large shifts in current level, by taking the running difference between neighboring windows of raw signal (explicitly set this parameter with the <code class="docutils literal notranslate"><span class="pre">--segmentation-parameters</span></code> option). The largest jumps (or most significant via a t-test for RNA) are chosen as the breakpoints between events. The mean of normalized raw signal is then computed for each event.</p>
+<p>Raw signal normalization estimates a median shift parameter and a median absolute deviation (MAD) scale parameter. By default, a global scale value is taken as the mean of MAD computed from a random sample of reads and used to scale all reads. This behaviour can be overriden with <code class="docutils literal notranslate"><span class="pre">--fit-scale-per-read</span></code> option or the <code class="docutils literal notranslate"><span class="pre">--fixed-scale</span></code> option to manually set the global scaling value (advanced users only). Raw signal is also windsorized, <code class="docutils literal notranslate"><span class="pre">--outlier-threshold</span></code> parameter. These scaling parameters are stored in the Tombo FAST5 slot for access in later commands. Note that only median signal normalization is available within the Tombo framework.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--segmentation-parameters</span></code> values have been optimized for DNA and RNA data types, so DNA and RNA read types should not be mixed in processing.</p>
+</div>
+<div class="section" id="sequence-to-signal-assignment">
+<h3>Sequence to Signal Assignment<a class="headerlink" href="#sequence-to-signal-assignment" title="Permalink to this headline">¶</a></h3>
+<p>Given the mapped genomic sequence and segmented signal, the sequence to signal assignment algorithm finds the most likely matching between these two.</p>
+<p>The algorithm first uses a large bandwidth (5000 events over the first 500 genomic bps) to identify the start of the genomic sequence within the events (see figure below). This is necessary as some portion at the beginning of a read is not base called and some additional sequence may have been trimmed from the alignment. The matching is determined by applying a dynamic programming/dynamic time warpping algorithm to find the most likely matching between the event signal levels and the expected signal levels given the genomic sequence.</p>
+<hr class="docutils" />
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="_images/begin_half_z_scores.png"><img alt="_images/begin_half_z_scores.png" src="_images/begin_half_z_scores.png" style="width: 546.7px; height: 383.90000000000003px;" /></a>
+<p class="caption"><span class="caption-text">Read start shifted half-normal scores</span></p>
+</div>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="_images/begin_forward_pass.png"><img alt="_images/begin_forward_pass.png" src="_images/begin_forward_pass.png" style="width: 550.0px; height: 383.90000000000003px;" /></a>
+<p class="caption"><span class="caption-text">Read start forward pass scores and traceback path</span></p>
+</div>
+<hr class="docutils" />
+<p>A static banded matrix is constructed by computing the z-score for event level (x-axis) against genomic positions (y-axis). The negative absolute value z-score is shifted to an expected value of zero to fill the banded matrix (see figure <strong>a</strong> above). A forward pass computes the maximal cummulative score up to each matched event to genome position (see figure <strong>b</strong> above).</p>
+<p>At each iteration the maximal score is taken over three possibilities 1) staying in the same genomic position, and accumulating the shifted z-score 2) matching an event with a genomic position (with score bonus) 3) skipping this genomic position (with a score penalty). The score match and skip penalties are definied by the <code class="docutils literal notranslate"><span class="pre">--signal-align-parameters</span></code>. The default values have been optimized for DNA and RNA data types. From this forward pass, the maximal score along the last genomic position is taken and traced back to obtain the starting position of matching sequence and signal.</p>
+<p>If a read is short enough (less than 5500 events or less than 500 bps of called sequence), then the whole sequence to signal matching will be performed with a single run with an appropriate static bandwidth.</p>
+<p>For longer reads, the above computed start matching position is taken and then the same dynamic programming solution is applied except a smaller adaptive band is now used (see figure below). The bandwidth is definied by the <code class="docutils literal notranslate"><span class="pre">--signal-align-parameters</span></code> option and again has been optimized for DNA and RNA data types. At each genomic position, the band position is defined to center on the maximal score of the forward pass from the previous base. This aims to ensure that the traceback path will remain within the adaptive window. There are edge cases where the valid matching leaves the adaptive band. These reads are filtered out and included in the failed read group <code class="docutils literal notranslate"><span class="pre">Read</span> <span class="pre">event</span> <span class="pre">to</span> <span class="pre">sequence</span> <span class="pre">alignment</span> <span class="pre">extends</span> <span class="pre">beyond</span> <span class="pre">--bandwidth</span></code>.</p>
+<hr class="docutils" />
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/adaptive_half_z_scores.png"><img alt="_images/adaptive_half_z_scores.png" src="_images/adaptive_half_z_scores.png" style="width: 568.8000000000001px; height: 397.6px;" /></a>
+<p class="caption"><span class="caption-text">Full read adaptive banded shifted half-normal scores</span></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="_images/adaptive_forward_pass.png"><img alt="_images/adaptive_forward_pass.png" src="_images/adaptive_forward_pass.png" style="width: 568.0px; height: 397.6px;" /></a>
+<p class="caption"><span class="caption-text">Full read adaptive banded forward pass scores</span></p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="resolve-skipped-bases">
+<h3>Resolve Skipped Bases<a class="headerlink" href="#resolve-skipped-bases" title="Permalink to this headline">¶</a></h3>
+<p>After the dynamic programming step, skipped bases must be resolved using the raw signal to obtain a matching of each genomic base to a bit of raw signal. A window around each skipped genomic base is identified. If a window does not contain enough raw signal to perform a raw signal search the window is expanded until enough signal is found. Overlapping windows are collapsed into a single window.</p>
+<p>After deletion windows are identified, a dynamic programming algorithm very similar to the last step is performed. Importantly, the raw signal is used instead of events and the skip move is no longer allowed. Additionally, each genomic base is forced to contain a minimal number of raw observations to produce more robust assignments (explicitly set this value with the <code class="docutils literal notranslate"><span class="pre">--segmentation-parameters</span></code> option). This completes the re-squiggle procedure producing a matching of a read’s raw signal to the mapped genomic sequence.</p>
+</div>
+</div>
+<div class="section" id="common-failed-read-descriptions">
+<h2>Common Failed Read Descriptions<a class="headerlink" href="#common-failed-read-descriptions" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Fastq</span> <span class="pre">slot</span> <span class="pre">not</span> <span class="pre">present</span> <span class="pre">in</span> <span class="pre">--basecall-group</span></code>
+<code class="docutils literal notranslate"><span class="pre">Raw</span> <span class="pre">data</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">found</span> <span class="pre">in</span> <span class="pre">Raw/Reads/Read_[read#]</span></code></p>
+<ul class="simple">
+<li>These error indicates that a necessary peice of information for Tombo to run was not found in the FAST5 file.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Alignment</span> <span class="pre">not</span> <span class="pre">produced</span></code></p>
+<ul class="simple">
+<li>This error indicates that minimap2 (via mappy API) did not produce a valid mapping.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Could</span> <span class="pre">not</span> <span class="pre">close</span> <span class="pre">FAST5</span> <span class="pre">file.</span> <span class="pre">Possibly</span> <span class="pre">corrupted</span> <span class="pre">file</span></code></p>
+<ul class="simple">
+<li>This error indicates that an unexpected error occurred trying to open or close a read file. This can happen if the reads are being actively accessed by another program or if a file has been corrupted.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Read</span> <span class="pre">contains</span> <span class="pre">too</span> <span class="pre">many</span> <span class="pre">potential</span> <span class="pre">genomic</span> <span class="pre">deletions</span></code>
+<code class="docutils literal notranslate"><span class="pre">Not</span> <span class="pre">enough</span> <span class="pre">raw</span> <span class="pre">signal</span> <span class="pre">around</span> <span class="pre">potential</span> <span class="pre">genomic</span> <span class="pre">deletion(s)</span></code></p>
+<ul class="simple">
+<li>These errors indicate that the sequence to signal matching algorithm was unable to identify a valid path.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Poor</span> <span class="pre">raw</span> <span class="pre">to</span> <span class="pre">expected</span> <span class="pre">signal</span> <span class="pre">matching</span></code>
+<code class="docutils literal notranslate"><span class="pre">Poor</span> <span class="pre">raw</span> <span class="pre">to</span> <span class="pre">expected</span> <span class="pre">signal</span> <span class="pre">matching</span> <span class="pre">at</span> <span class="pre">read</span> <span class="pre">start</span></code></p>
+<ul class="simple">
+<li>These errors indicate that the dynamic programming algorithm produce a poorly scored matching of genomic sequence to raw signal. Some potential sources for these errors include incorrect primary genomic mapping, incorrect genome sequence (compared to the biological sample), poor quality raw signal or an incompatible flowcell/library with included canonical models (only R9.5/4 flowcells currently supported; 2D reads are not supported; DNA and RNA are supported).</li>
+</ul>
+</div>
+<div class="section" id="tombo-fast5-format">
+<h2>Tombo FAST5 Format<a class="headerlink" href="#tombo-fast5-format" title="Permalink to this headline">¶</a></h2>
+<p>The result of the re-squiggle algorithm writes the sequence to signal assignment back into the read FAST5 files (found in the <code class="docutils literal notranslate"><span class="pre">--corrected-group</span></code> slot; the default value is the default for all other Tombo commands to read in this data). When running the re-squiggle algorithm a second time on a set of reads, the <code class="docutils literal notranslate"><span class="pre">--overwrite</span></code> option is required in order to write over the previous Tombo results.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--corrected-group</span></code> slot contains attributes for the signal normalization (shift, scale, upper_limit, lower_limit and outlier_threshold) as well as a boolean flag indicating whether the read is DNA or RNA. Within the <code class="docutils literal notranslate"><span class="pre">Alignment</span></code> group, the gemomic mapped start, end, strand and chromosome as well as mapping statistics (number clipped start and end bases, matching, mismatching, inserted and deleted bases) are stored.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Events</span></code> slot contains a matrix with the matching of raw signal to genomic sequence. This slot contains a single attribute (<code class="docutils literal notranslate"><span class="pre">read_start_rel_to_raw</span></code>) giving the zero-based offset indicating the beginning of the read genomic sequence within the raw signal. Each entry in the <code class="docutils literal notranslate"><span class="pre">Events</span></code> table indicates the normalized mean signal level (<code class="docutils literal notranslate"><span class="pre">norm_mean</span></code>), optionally (triggered by the <code class="docutils literal notranslate"><span class="pre">--include-event-stdev</span></code> option) the normalized signal standard deviation (<code class="docutils literal notranslate"><span class="pre">norm_stdev</span></code>), the start position of this base (<code class="docutils literal notranslate"><span class="pre">start</span></code>), the length of this event in raw signal values (<code class="docutils literal notranslate"><span class="pre">length</span></code>) and the genomic base (<code class="docutils literal notranslate"><span class="pre">base</span></code>).</p>
+<p>This information is accessed as needed for down-stream Tombo processing commands.</p>
+<p>This data generally adds ~75% to the memory footprint of a minimal FAST5 file (containing raw and sequence data; not including a basecalling Events table). This may vary across files and sample types.</p>
+<p><strong>Important RNA note</strong>: Tombo performs only un-spliced mapping. As such, for potentially spliced transcripts a transcriptome file must be provided. While this makes Tombo RNA processing annotation dependent the transcriptome is the more appropriate setting for modified base detection and thus this path has been chosen for Tomob RNA processing. More details about RNA processing can be found in the <a class="reference internal" href="rna.html"><span class="doc">RNA Processing</span></a> section.</p>
+<p><strong>Minor RNA note</strong>: RNA reads pass through the pore in the 3’ to 5’ direction during sequencing. As such, the raw signal and albacore events are stored in the reverse direction from the genome. Tombo events for RNA data are stored in the opposite direction (corresponding to the genome sequence direction, not sequencing time direction) for several practical reasons. Thus if events are to be compared to the raw signal, the raw signal must be reversed. Tombo RNA models are stored in the same direction and thus may be considered inverted as compared to some other RNA HMM signal level models.</p>
+</div>
+<div class="section" id="tombo-index-file">
+<h2>Tombo Index File<a class="headerlink" href="#tombo-index-file" title="Permalink to this headline">¶</a></h2>
+<p>By default, Tombo will create a hidden file containing the essential genome mapping location for each validly processed read. This file will be located alongside the base fast5s directory. For example, if resquiggle is called on this directory <code class="docutils literal notranslate"><span class="pre">/path/to/fast5/reads/</span></code> then the following file will be created <code class="docutils literal notranslate"><span class="pre">/path/to/fast5/.reads.RawGenomeCorrected_000.tombo.index</span></code>. This file should generally be about 1,000 times smaller than the corresponding FAST5s and so should not incur significantly more disk usage. If desired, the index can be skipped with the <code class="docutils literal notranslate"><span class="pre">--skip-index</span></code> option. Note that this will make most all downstream commands much slower and filtering cannot be applited without this index file.</p>
+</div>
+<div class="section" id="additional-command-line-options">
+<h2>Additional Command Line Options<a class="headerlink" href="#additional-command-line-options" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">--failed-reads-filename</span></code></p>
+<ul class="simple">
+<li>This option outputs the filenames for each read that failed via each failure mode. This can be useful for tracking down bothersome errors.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">--obs-per-base-filter</span></code></p>
+<ul class="simple">
+<li>This option applies a filter to “stuck” reads (too many observations per genomic base). This filter is applied only to the Tombo index file and can be cleared later. See the <a class="reference internal" href="filtering.html"><span class="doc">Read Filtering Commands</span></a> section for more details.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">--ignore-read-locks</span></code></p>
+<ul class="simple">
+<li>Multiple independent <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> commands on the same set of reads should NOT be run simultaneously. This can cause hard to track errors and read file corruption. To protect against this, Tombo adds a lock (only acknowledged by Tombo) to each directory being processed. If a previous <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> command fails in a very unexpected fashion these locks can be left in place. In this case the <code class="docutils literal notranslate"><span class="pre">--ignore-read-locks</span></code> option is provided. This is the only intended use for this option.</li>
+</ul>
+</div>
+<div class="section" id="pre-process-raw-reads">
+<h2>Pre-process Raw Reads<a class="headerlink" href="#pre-process-raw-reads" title="Permalink to this headline">¶</a></h2>
+<p>Nanopore raw signal-space data consumes more memory than sequence-space data. As such, many users will produce only FASTQ basecalls initially from a set of raw reads in FAST5 format. The Tombo framework requires the linking of these basecalls with the raw signal-space data. The <code class="docutils literal notranslate"><span class="pre">annotate_raw_with_fastqs</span></code> sub-command is provided to assist with this workflow.</p>
+<p>Given a directory (or nested directories) of FAST5 raw read files and a set of FASTQ format basecalls from these reads, the <code class="docutils literal notranslate"><span class="pre">annotate_raw_with_fastqs</span></code> adds the sequence information from the FASTQ files to the appropriate FAST5 files. This command generally adds 15-25% to the disk usage for the raw reads.</p>
+<p>This functionality requires that the FASTQ seqeunce header lines begin with the read identifier from the FAST5 file. This has been tested with the Oxford Nanopore Technologies supported basecaller, albacore. Third-party basecallers may be not be processed correctly.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tombo annotate_raw_with_fastqs --fast5-basedir &lt;fast5s-base-directory&gt; --fastq-filenames reads.fastq
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-standard-data-locations">
+<h2>Non-standard Data Locations<a class="headerlink" href="#non-standard-data-locations" title="Permalink to this headline">¶</a></h2>
+<p>In the Tombo framework, it is possible to access and store basecalls and genome-anchored re-squiggle results in custom locations within FAST5 files.</p>
+<p>For example, basecalls can be found in the <code class="docutils literal notranslate"><span class="pre">Basecall_1D_001</span></code> slot in a set of reads that have been basecalled more than one time. In this case the basecalls can be accessed in Tombo by specifying the <code class="docutils literal notranslate"><span class="pre">--basecall-group</span></code> option to the <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> command.</p>
+<p>It can also be adventageous to store re-squiggle results in a non-standard locations. For example, if one would like to test multiple sets of re-squiggle parameters or reference versions without having to overwrite old results and re-run the <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> command, the <code class="docutils literal notranslate"><span class="pre">--corrected-group</span></code> option can be specified. This will store the re-squiggle results in a new slot within the FAST5 file as well as creating a new Tombo index file.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">If the <code class="docutils literal notranslate"><span class="pre">--corrected-group</span></code> is specified in the <code class="docutils literal notranslate"><span class="pre">resquiggle</span></code> command, this same value must be passed to all other Tombo sub-commands in order to access these results. This inlcudes all filtering, plotting, significance testing, and text output commands.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modified_base_detection.html" class="btn btn-neutral float-right" title="Modified Base Detection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="examples.html" class="btn btn-neutral" title="Tombo Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Oxford Nanopore Technologies.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.2.1b',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
